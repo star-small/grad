@@ -38,17 +38,15 @@ class Vector:
     def __repr__(self):
         return f"Vector: {self.val}"
 
-    def copy(self):
-        return Vector(self.val)
+    def copy(self, vector):
+        return vector
 
 
 class Axis:
-    def __init__(self, window, batch):
-        self.batch = batch
-        self.window = window
-
-    def draw_axis(self, size):
+    def draw_axis(self, size=[600, 600]):
+        self.window = pyglet.window.Window(size[0], size[1])
         self.center = (size[0]/2, size[1]/2)
+        self.batch = pyglet.graphics.Batch()
 
         self.x_axis = shapes.Line(0, self.center[1], size[0], self.center[1],
                                   color=(255, 255, 255), batch=self.batch)
@@ -68,27 +66,20 @@ v3 = Vector([-20, 100])
 
 
 class Plot:
-
     def __init__(self):
-        self.size = [600, 600]
-        self.window = pyglet.window.Window(self.size[0], self.size[1])
-        self.batch = pyglet.graphics.Batch()
-        axis = Axis(self.window, self.batch)
-        axis.draw_axis(self.size)
+        axis = Axis()
+        axis.draw_axis()
         self.center = axis.get_center()
 
     def plot(self, vector):
         self.display = shapes.Line(self.center[0]+vector.origin[0], self.center[1]+vector.origin[1], self.center[0] +
-                                   vector.val[0]+vector.origin[0], self.center[1]+vector.val[1]+vector.origin[1], width=3, color=vector.color, batch=self.batch)
-        self.display.draw()
-        # self.display.delete()
+                                   vector.val[0]+vector.origin[0], self.center[1]+vector.val[1]+vector.origin[1], width=3, color=vector.color)
 
+        self.display.draw()
+        self.display.delete()
     # def put_vector(self):
     #     self.vec = shapes.Line(self.center[0]+self.origin[0], self.center[1]+self.origin[1], self.center[0] + 100, self.center[1]+100, width=3,
     #                            color=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), batch=self.batch)
 
     def show(self):
         pyglet.app.run()
-        print('rwf')
-
-        pyglet.app.exit()
