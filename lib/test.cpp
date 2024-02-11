@@ -4,7 +4,7 @@ int main()
 {
     // create the window
     sf::RenderWindow window(sf::VideoMode(800, 600), "OpenGL");
-    sf::CircleShape shape(200);
+    sf::RectangleShape shape(sf::Vector2f(150.f, 5.f));
     shape.setFillColor(sf::Color(100, 250, 10));
     // run the program as long as the window is open
     while (window.isOpen())
